@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import chess
 import chess.svg
 if __name__ == "__main__":
