@@ -5,13 +5,16 @@ from js import console
 
 
 
-def draw(board, squareSet = None):
-    if squareSet is None:
+def draw(board, powerupSquares = None):
+    if powerupSquares is None:
         b_svg = chess.svg.board(
             board=board,
             size=600,
             flipped = not board.turn)
     else:
+        squareSet = chess.SquareSet()
+        for sq in powerupSquares:
+            squareSet.add(sq)
         b_svg = chess.svg.board(
             board=board,
             size=600,
@@ -22,7 +25,6 @@ def draw(board, squareSet = None):
 
 def submit_move(*args, **kwargs): 
     global board   
-    global squareSet
     global powerupSquares
     move = Element('input').element.value
     try:
@@ -35,19 +37,15 @@ def submit_move(*args, **kwargs):
         powerup = Powerup(board)
         powerup.randPowerup(move.to_square)
         board = powerup.board
-    draw(board, squareSet)
+    draw(board, powerupSquares)
     if board.is_game_over():
         pyscript.write('output', 'Game over')
 
 def reset(*args, **kwargs):
     global board
-    global squareSet
     global powerupSquares
     board, powerupSquares = createGame(5)
-    squareSet = chess.SquareSet()
-    for sq in powerupSquares:
-        squareSet.add(sq)
-    draw(board, squareSet)
+    draw(board, powerupSquares)
 
 
 def createGame(numPowerups):
@@ -148,8 +146,5 @@ class Powerup:
 
 
 board, powerupSquares = createGame(5)
-squareSet = chess.SquareSet()
-for sq in powerupSquares:
-  squareSet.add(sq)
-draw(board, squareSet)
+draw(board, powerupSquares)
 
