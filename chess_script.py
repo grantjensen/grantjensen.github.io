@@ -135,13 +135,13 @@ board, powerupSquares = createGame(5)
 draw(board, powerupSquares)
 
  
-def _log_input_to_console(e):
+def _move_press(e):
     if e.key == "Enter":
         move = e.target.value
         document.getElementById("input").value = ""
         pyscript.write("output", "")
         submit_move(move)
 
-log_input_to_console = create_proxy(_log_input_to_console)
-document.getElementById("input").addEventListener("keypress", log_input_to_console)
+move_press = create_proxy(_move_press)
+document.getElementById("input").addEventListener("keypress", move_press)
 
