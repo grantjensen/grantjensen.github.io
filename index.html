@@ -23,16 +23,12 @@
 
     </head>
     <body>
-        <div class="container">
-            
-            <div class="row">
-                <div id="svg"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.2" baseProfile="tiny" viewBox="0 0 390 390" width="600" height="600"><rect x="0" y="0" width="390" height="390" fill="#30ac10" /></svg></div>
-            </div>
-            
+        <div class="container" style="text-align:center;">
+            <div id="svg" style=" display: flex; justify-content: center; align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.2" baseProfile="tiny" width="600" height="600" style="display: flex; justify-content: center; align-items: center;"></svg></div>
+            <label for="input">Enter your move below:</label><br>
+            <input type="text" id="input" class="button">
+            <div id='output'></div>
+            <button id="reset-button" type="submit" pys-onClick="reset" class="button">RESET</button>
         </div>
-        <label for="input">Enter your move below:</label><br>
-        <input type="text" id="input" class="button">
-        <div id='output'></div>
-        <button id="reset-button" type="submit" pys-onClick="reset" class="button">RESET</button>
     </body>
 </html>
