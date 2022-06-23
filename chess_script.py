@@ -1,7 +1,8 @@
 import chess
 import chess.svg
 import random
-from js import console
+from js import console, document
+from pyodide import create_proxy
 
 
 
@@ -23,11 +24,9 @@ def draw(board, powerupSquares = None):
     pyscript.write('svg', b_svg)
 
 
-def submit_move(*args, **kwargs): 
+def submit_move(move): 
     global board   
     global powerupSquares
-    move = Element('input').element.value
-    pyscript.write('output', "")
     try:
         move = board.parse_san(move)
     except:
@@ -134,4 +133,15 @@ class Powerup:
 
 board, powerupSquares = createGame(5)
 draw(board, powerupSquares)
+
+ 
+def _log_input_to_console(e):
+    if e.key == "Enter":
+        move = e.target.value
+        document.getElementById("input").value = ""
+        pyscript.write("output", "")
+        submit_move(move)
+
+log_input_to_console = create_proxy(_log_input_to_console)
+document.getElementById("input").addEventListener("keypress", log_input_to_console)
 
