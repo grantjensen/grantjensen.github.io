@@ -27,6 +27,7 @@ def submit_move(*args, **kwargs):
     global board   
     global powerupSquares
     move = Element('input').element.value
+    pyscript.write('output', "")
     try:
         move = board.parse_san(move)
     except:
@@ -104,20 +105,11 @@ class Powerup:
             for i in range(len(boardInt)):
                 if boardInt[i] < 0:
                     possibleSquares += [i]
-        swapPairs = []
-        for i in range(len(possibleSquares)):
-            for j in range(len(possibleSquares)):
-                if i < j and boardInt[possibleSquares[i]] != boardInt[possibleSquares[j]]:
-                    swapPairs += [[possibleSquares[i], possibleSquares[j]]]
-        random.shuffle(swapPairs)
-        for i in range(len(swapPairs)):
-            board2 = self.board.copy()
-            pieceMap = self.board.piece_map()
-            pieceMap[swapPairs[i][0]] , pieceMap[swapPairs[i][1]] = pieceMap[swapPairs[i][1]] , pieceMap[swapPairs[i][0]]
-            board2.set_piece_map(pieceMap)
-            if board2.is_valid():
-                self.board = board2
-                return
+        pair = random.sample(possibleSquares, 2)
+        pieceMap = self.board.piece_map()
+        pieceMap[pair[0]], pieceMap[pair[1]] = pieceMap[pair[1]], pieceMap[pair[0]]
+        self.board.set_piece_map(pieceMap)
+        return
             
     
 
@@ -135,14 +127,9 @@ class Powerup:
             possibleOutcome *= -1
         possibleOutcome.remove(currType)
         random.shuffle(possibleOutcome)
-        for i in range(4):
-            board2 = self.board.copy()
-            piece_map[square].piece_type = possibleOutcome[i]
-            board2.set_piece_map(piece_map)
-            if board2.is_valid():
-                self.board = board2
-                return
-        piece_map = self.board.piece_map()
+        piece_map[square].piece_type = possibleOutcome[0]
+        board.set_piece_map(piece_map) 
+        return
 
 
 board, powerupSquares = createGame(5)
